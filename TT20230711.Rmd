@@ -60,7 +60,7 @@ ggplot(data = sh_temps, aes(x = Year, y=Aug)) +
 
 
 
-Combine Northen and Southern hemisphere data for August
+Combine Northern and Southern hemisphere data for August
 ```{r}
 ggplot() +
   geom_line(data=nh_temps, aes(x=Year, y=Aug), colour = "red") +
