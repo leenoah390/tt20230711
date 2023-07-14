@@ -1,0 +1,9 @@
+    The datasets for this week's Tidy Tuesday are all numerical and based on a timeline. I decided to practise on creating point graphs to show changes over time.
+
+
+## Plot graphs connected with line
+    I decided to create graphs showing the average change of temperature in August over the years. After plotting graphs focusing on the temperature changes globally and between the 2 hemispheres, I decided to try something that I had never done before: to plot 2 different graphs from 2 different datasets onto the same plot and axes.
+
+
+## Creating overall graph
+    The next graphs were to show the changes over the meteorological seasons. The challenge here was that the data was not formatted into a single column (like the data for August, or any of the other 11 months where I could plot them with their row indexing value to represent a given year), but rather spread out over multiple columns per row, which is much different than how datasets I used from school and other practise are organized. In the end, I was able to plot a graph showing the deviations over the seasons.
