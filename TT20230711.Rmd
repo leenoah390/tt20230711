@@ -1,0 +1,126 @@
+---
+title: "TT20230711"
+author: "Noah Lee"
+date: "2023-07-11"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+```
+
+## Instructions
+```{r}
+# Get the Data
+
+# Read in with tidytuesdayR package 
+# Install from CRAN via: install.packages("tidytuesdayR")
+
+global_temps <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-07-11/global_temps.csv')
+nh_temps <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-07-11/nh_temps.csv')
+sh_temps <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-07-11/sh_temps.csv')
+zonann_temps <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-07-11/zonann_temps.csv')
+
+```
+
+
+## The Data
+```{r}
+head(global_temps)
+head(nh_temps)
+head(sh_temps)
+head(zonann_temps)
+```
+
+
+## Plot graphs connected with line
+
+August of Global
+```{r}
+ggplot(data = global_temps, aes(x = Year, y=Aug)) +
+  geom_point() + geom_line() + ylab("AVG change of temp in August")
+```
+
+
+August of Northern hemisphere
+```{r}
+ggplot(data = nh_temps, aes(x = Year, y=Aug)) +
+  geom_point() + geom_line() + ylab("AVG change of temp in August")
+```
+
+
+August of Southern hemisphere
+```{r}
+ggplot(data = sh_temps, aes(x = Year, y=Aug)) +
+  geom_point() + geom_line() + ylab("AVG change of temp in August")
+```
+
+
+
+Combine Northen and Southern hemisphere data for August
+```{r}
+ggplot() +
+  geom_line(data=nh_temps, aes(x=Year, y=Aug), colour = "red") +
+  geom_smooth(data=nh_temps, aes(x=Year, y=Aug), colour = "red") +
+  geom_line(data=sh_temps, aes(x=Year, y=Aug), colour = "blue") +
+  geom_smooth(data=sh_temps, aes(x=Year, y=Aug), colour = "blue")
+```
+
+
+
+# Creating overall graph
+Create 1 graph using all meteorological seasons, and another using the D-N variable. In the end, the graphs should be
+almost identical.
+
+- Creating a graph using the meteorological season variables DJF, MAM, JJA, and SON.
+```{r}
+metsea4 <- c()
+
+for (row in 1:nrow(global_temps)) {
+  temp1 <- global_temps[[row, 16]]
+  temp2 <- global_temps[[row, 17]]
+  temp3 <- global_temps[[row, 18]]
+  temp4 <- global_temps[[row, 19]]
+  metsea4 <- append(metsea4, temp1)
+  metsea4 <- append(metsea4, temp2)
+  metsea4 <- append(metsea4, temp3)
+  metsea4 <- append(metsea4, temp4)
+}
+
+#length(metsea4)
+metsea.global <- data.frame(season = 1:576)
+metsea.global$dev <- metsea4
+#metsea.global    #data per meteorological season
+```
+
+```{r}
+metsea4gg <- metsea.global[2:574,]
+
+ggplot(data = metsea4gg, aes(x=season, y=dev)) + 
+  geom_point() + geom_line() + ylab("Deviation from AVG per season")
+```
+
+
+- Creating a graph using the meteorological year variable D-N.
+```{r}
+DNdata <- c()
+
+for (row in 1:nrow(global_temps)) {
+  temp <- global_temps[[row, 15]]
+  DNdata <- append(DNdata, temp)
+}
+
+DNcomp <- data.frame(year = 1:144)
+DNcomp$dev <- DNdata
+#DNcomp    #data per meteorological year
+```
+
+```{r}
+DNgg <- DNcomp[2:143,]
+
+ggplot(data = DNgg, aes(x=year, y=dev)) + 
+  geom_point() + geom_line() + ylab("Deviation from AVG per year")
+```
