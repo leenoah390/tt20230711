@@ -71,7 +71,7 @@ ggplot() +
 
 
 
-# Creating overall graph
+## Creating overall graph
 Create 1 graph using all meteorological seasons, and another using the D-N variable. In the end, the graphs should be
 almost identical.
 
